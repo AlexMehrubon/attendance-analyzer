@@ -72,8 +72,8 @@
 
 
 <script src="app/app.js"></script>
-<script src="app/group/read-groups.js"
-<script src="app/faculty/read-faculty.js"
+<script src="app/group/read-groups.js"></script>
+<script src="app/faculty/read-faculty.js"></script>
 <script src = "app/student/create-student.js"></script>
 <script src = "app/student/read-students.js"></script>
 </body>

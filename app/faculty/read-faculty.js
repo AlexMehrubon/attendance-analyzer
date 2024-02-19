@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded',
     function () {
 
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded',
                     option.value = item.faculty_name;
                     option.innerText = item.faculty_name;
                     facultyList.appendChild(option)
-                    console.log("wtf")
+
 
                 })
 
@@ -34,5 +35,4 @@ document.addEventListener('DOMContentLoaded',
                 console.error("Error:", error)
             })
     })
-
 
