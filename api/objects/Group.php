@@ -11,6 +11,7 @@ class Group
     public $group_name;
     public $course;
 
+    public $faculty;
     public function __construct($db){
         $this->conn = $db;
     }
@@ -18,9 +19,16 @@ class Group
     function read()
     {
         $query = "SELECT
-         p.id,p.group_name,p.course
+         c.faculty_name as faculty_name,p.id,p.group_name,p.course,p.faculty_id
     FROM 
-        " . $this->table_name . " p";
+        " . $this->table_name . " p
+        LEFT JOIN
+            faculty c
+                ON  p.faculty_id = c.id
+        ORDER BY
+            p.id DESC";
+
+
         // выбираем все записи
 
 

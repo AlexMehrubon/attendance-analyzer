@@ -1,6 +1,4 @@
 let groupSelectCourse = document.getElementById("groupSelectCourse");
-const changeEvent = new Event("change");
-groupSelectCourse.dispatchEvent(changeEvent);
 
 groupSelectCourse.addEventListener("change", //showProducts
     function () {

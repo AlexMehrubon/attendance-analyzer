@@ -35,6 +35,8 @@ if ($num > 0) {
             "id" => $id,
             "group_name" => $group_name,
             "course" => $course,
+            "faculty_id" => $faculty_id,
+            "faculty_name" => $faculty_name
 
         );
         $groups_arr["records"][] = $currentGroup;
