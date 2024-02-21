@@ -10,7 +10,10 @@ class Student
     public $id;
     public $first_name;
     public $last_name;
-    public $group_ID;
+    public $group_id;
+    public $login;
+    public $course;
+    public $password;
 
     public function __construct($db){
         $this->conn = $db;
@@ -39,7 +42,7 @@ class Student
         $query = "INSERT INTO
             " . $this->table_name . "
         SET
-            first_name=:first_name, last_name=:last_name";
+            first_name=:first_name, last_name=:last_name, password=:password, login=:login, group_id=:group_id, course=:course";
 
         // подготовка запроса
         $stmt = $this->conn->prepare($query);
@@ -47,11 +50,19 @@ class Student
         // очистка
         $this->first_name = htmlspecialchars(strip_tags($this->first_name));
         $this->last_name = htmlspecialchars(strip_tags($this->last_name));
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->login = htmlspecialchars(strip_tags($this->login));
+        $this->group_id = htmlspecialchars(strip_tags($this->group_id));
+        $this->course = htmlspecialchars(strip_tags($this->course));
 
 
         // привязка значений
         $stmt->bindParam(":first_name", $this->first_name);
         $stmt->bindParam(":last_name", $this->last_name);
+        $stmt->bindParam(":password", $this->password);
+        $stmt->bindParam(":login", $this->login);
+        $stmt->bindParam(":course", $this->course);
+        $stmt->bindParam(":group_id", $this->group_id);
 
         // выполняем запрос
         if ($stmt->execute()) {

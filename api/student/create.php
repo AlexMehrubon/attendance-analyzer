@@ -24,12 +24,20 @@ $data = json_decode(file_get_contents("php://input"));
 // убеждаемся, что данные не пусты
 if (
     !empty($data->first_name) &&
-    !empty($data->last_name)
+    !empty($data->last_name)&&
+    !empty($data->password)&&
+    !empty($data->login)&&
+    !empty($data->group_id)&&
+    !empty($data->course)
 
 ) {
     // устанавливаем значения свойств товара
     $student->first_name = $data->first_name;
     $student->last_name = $data->last_name;
+    $student->course = $data->course;
+    $student->login = $data->login;
+    $student->password = $data->password;
+    $student->group_id = $data->group_id;
 
 
     // создание пользователя

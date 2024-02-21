@@ -1,0 +1,26 @@
+.header {
+    height: 3%;
+    background-color: #070c1c; /* Синий цвет */
+    padding: 15px 0;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.header-text {
+    font-size:25px;
+    color: #ddd;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial,sans-serif;
+}
+
+.header-text:hover {
+    transform: scale(1.05);
+}

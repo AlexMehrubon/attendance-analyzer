@@ -9,11 +9,12 @@ export async function getFaculties() {
         }
 
         const facultyList = document.getElementById("groupSelectFaculty");
-        facultyList.innerText = " ";
+
 
         data.records.forEach(item => {
+            console.log(item.id)
             let option = document.createElement('option');
-            option.value = item.faculty_name;
+            option.value = item.id;
             option.innerText = item.faculty_name;
             facultyList.appendChild(option);
         });

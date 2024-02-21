@@ -1,9 +1,15 @@
-document.getElementById("login-form").addEventListener("submit", function (e) {
-    e.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузку страницы)
+export async function createStudent () {
+    const API_URL = 'http://courseWork/api/student/create.php';
+    const SUCCESS_STATUS = 201;
 
     let json_data = {
         first_name: document.getElementById("firstNameField").value,
-        last_name: document.getElementById("lastNameField").value
+        last_name: document.getElementById("lastNameField").value,
+        login: document.getElementById("loginField").value,
+        password: document.getElementById("firstPasswordField").value,
+        group_id: document.getElementById("groupSelectGroup").value,
+        course: document.getElementById("groupSelectCourse").value
+
     };
 
     let requestOptions = {
@@ -14,17 +20,18 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
         }
     };
 
-    fetch('http://courseWork/api/student/create.php', requestOptions)
-        .then(response => {
-            if (response.status === 201) {
-                document.getElementById("login-form").reset();
-            } else {
-                return response.text().then(errorText => {
-                    console.log(response.status, errorText);
-                });
-            }
-        })
-        .catch(error => {
-            console.log("Ошибка сети:", error);
-        });
-});
+    try {
+        const response = await fetch(API_URL, requestOptions);
+
+        if (response.status === SUCCESS_STATUS) {
+            document.getElementById("login-form").reset();
+        } else {
+            const errorText = await response.text();
+            console.error(`Ошибка: ${response.status} - ${errorText}`);
+            // Вы можете добавить обработку ошибок здесь, например, показать пользователю сообщение об ошибке
+        }
+    } catch (error) {
+        console.error("Ошибка сети:", error);
+        // Вы можете добавить обработку сетевых ошибок здесь, например, показать пользователю сообщение об ошибке
+    }
+}

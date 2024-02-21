@@ -9,11 +9,16 @@ export async function getGroups(groupSelectedCourse, groupSelectedFaculty) {
         const groupList = document.getElementById("groupSelectGroup");
         groupList.innerText = " ";
 
+
         let isMatchedCourse = false;
+        const selectedFacultyIndex = groupSelectedFaculty.selectedIndex
+
         data.records.forEach(item => {
-            if (Number(item.course) === Number(groupSelectedCourse.value) && (groupSelectedFaculty.value === item.faculty_name)) {
+            if (Number(item.course) === Number(groupSelectedCourse.value) &&
+                (groupSelectedFaculty[selectedFacultyIndex].innerText === item.faculty_name))
+            {
                 let option = document.createElement('option');
-                option.value = item.group_name;
+                option.value = item.id;
                 option.innerText = item.group_name;
                 groupList.appendChild(option);
                 isMatchedCourse = true;

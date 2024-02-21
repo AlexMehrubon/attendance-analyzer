@@ -5,54 +5,51 @@ use objects\Group;
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
+// Константы для статус-кодов и сообщений
+const HTTP_OK = 200;
+const HTTP_NOT_FOUND = 404;
+const NO_RECORDS_MESSAGE = "Такого студента не существует.";
 
-// подключение базы данных и файл, содержащий объекты
+// Подключение базы данных и файл, содержащий объекты
 include_once "../config/Database.php";
 include_once "../objects/Group.php";
 
-// получаем соединение с базой данных
+// Получение соединения с базой данных
 $database = new Database();
 $db = $database->getConnection();
 
-// инициализируем объект
+// Инициализация объекта
 $group = new Group($db);
 
 $stmt = $group->read();
-$num = $stmt->rowCount();
+$groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// проверка, найдено ли больше 0 записей
-if ($num > 0) {
-    // массив товаров
+// Проверка, найдено ли больше 0 записей
+if (count($groups) > 0) {
+    // Форматирование данных
     $groups_arr = array();
     $groups_arr["records"] = array();
 
-    // получаем содержимое нашей таблицы
-    // fetch() быстрее, чем fetchAll()
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // извлекаем строку
-        extract($row);
+    foreach ($groups as $group) {
         $currentGroup = array(
-            "id" => $id,
-            "group_name" => $group_name,
-            "course" => $course,
-            "faculty_id" => $faculty_id,
-            "faculty_name" => $faculty_name
-
+            "id" => $group['id'],
+            "group_name" => $group['group_name'],
+            "course" => $group['course'],
+            "faculty_id" => $group['faculty_id'],
+            "faculty_name" => $group['faculty_name']
         );
         $groups_arr["records"][] = $currentGroup;
     }
 
-    // устанавливаем код ответа - 200 OK
-    http_response_code(200);
+    // Установка кода ответа - 200 OK
+    http_response_code(HTTP_OK);
 
-    // выводим данные о товаре в формате JSON
-    echo json_encode($groups_arr);
-}
+    // Вывод данных о товаре в формате JSON
+    echo json_encode($groups_arr, JSON_UNESCAPED_UNICODE);
+} else {
+    // Установка кода ответа - 404 Не найдено
+    http_response_code(HTTP_NOT_FOUND);
 
-else {
-    // установим код ответа - 404 Не найдено
-    http_response_code(404);
-
-    // сообщаем пользователю, что товары не найдены
-    echo json_encode(array("message" => "Такого студента не существует."), JSON_UNESCAPED_UNICODE);
+    // Сообщение пользователю, что студенты не найдены
+    echo json_encode(array("message" => NO_RECORDS_MESSAGE), JSON_UNESCAPED_UNICODE);
 }
